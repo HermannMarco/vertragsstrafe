@@ -542,7 +542,9 @@
    KONFIGURATION – hier anpassen
    ========================================================= */
 const CONFIG = {
-  password: 'schwabenpark',                 // Vergleich ohne Groß-/Kleinschreibung
+  // SHA-256 des Passworts (klein geschrieben, ohne Leerzeichen) – Klartext steht nicht im Code.
+  // Neuen Hash erzeugen: in der Browser-Konsole  sha256('neuespasswort')  aufrufen.
+  passwordHash: '6e3bb8f43d9b694f18ffd98aa170a34161c3d370f2eff8ca6e4f569d74c5e52d',
   deadline: new Date(2027, 4, 31, 23, 59, 59), // 31.05.2027
   me: {
     name: 'Marco',
@@ -558,12 +560,12 @@ const CONFIG = {
       no: 'Die Kartoffel hat leider kein Smartphone.' },
     { name: 'Dr. Paragraph', age: 47, emoji: '🧑‍⚖️', bg: '#8FA3B8', bio: 'Fachanwalt für Tinder-Schadensersatz. 450 € / Stunde.',
       no: 'Interessenkonflikt – er vertritt Tinder.' },
-    { name: 'Toaster', age: 3, emoji: '🍞', bg: '#E3B27A', bio: 'Wird schnell warm. Springt nach 2 Minuten ab.',
-      no: 'Kein Match. Der Toaster steht auf Brot.' },
     { name: 'Bruno', age: 5, emoji: '🐶', bg: '#B7D3C6', bio: 'Sehr flauschig. Leider schon vergeben (an sein Herrchen).',
-      no: 'Bruno hat sich lieber für ein Leckerli entschieden.' }
+      no: 'Bruno hat sich lieber für ein Leckerli entschieden.' },
+    { name: 'Toaster', age: 3, emoji: '🍞', bg: '#E3B27A', bio: 'Wird schnell warm. Springt nach 2 Minuten ab.',
+      no: 'Kein Match. Der Toaster steht auf Brot.' }
   ],
-  mePosition: 3,                            // an welcher Stelle im Stapel du auftauchst (0 = zuerst)
+  mePosition: 4,                           // an welcher Stelle im Stapel du auftauchst (0 = zuerst)
   cuisines: ['Asiatisch', 'Sushi', 'Deutsch / Schwäbisch', 'Italienisch', 'Griechisch', 'Türkisch', 'Indisch',
              'Mexikanisch', 'Spanisch / Tapas', 'Französisch', 'Burger', 'Steakhouse', 'Fisch & Meeresfrüchte', 'Vegetarisch / Vegan'],
   times: ['18:00', '18:30', '19:00', '19:30', '20:00'],
@@ -672,9 +674,43 @@ $('#btnStart').onclick = () => {
   $('#pwBox').style.display = 'block';
   setTimeout(() => $('#pw').focus(), 50);
 };
+function sha256(str) {
+  const K = [], H = [];
+  for (let n = 2, c = 0; c < 64; n++) {
+    let p = true;
+    for (let i = 2; i * i <= n; i++) if (n % i === 0) { p = false; break; }
+    if (!p) continue;
+    if (c < 8) H[c] = (Math.pow(n, 1 / 2) * 2 ** 32) | 0;
+    K[c++] = (Math.pow(n, 1 / 3) * 2 ** 32) | 0;
+  }
+  const bytes = Array.from(new TextEncoder().encode(str)), bitLen = bytes.length * 8;
+  bytes.push(0x80);
+  while (bytes.length % 64 !== 56) bytes.push(0);
+  for (let i = 7; i >= 0; i--) bytes.push(i >= 4 ? 0 : (bitLen >>> (i * 8)) & 255);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let o = 0; o < bytes.length; o += 64) {
+    const w = [];
+    for (let i = 0; i < 64; i++) {
+      if (i < 16) w[i] = (bytes[o + i * 4] << 24) | (bytes[o + i * 4 + 1] << 16) | (bytes[o + i * 4 + 2] << 8) | bytes[o + i * 4 + 3];
+      else {
+        const s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+        const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+        w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+      }
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let i = 0; i < 64; i++) {
+      const t1 = (h + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + w[i]) | 0;
+      const t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    [a, b, c, d, e, f, g, h].forEach((v, i) => { H[i] = (H[i] + v) | 0; });
+  }
+  return H.map(v => (v >>> 0).toString(16).padStart(8, '0')).join('');
+}
 function checkPw() {
   const v = $('#pw').value.trim().toLowerCase().replace(/\s+/g, '');
-  if (v === CONFIG.password.toLowerCase()) {
+  if (sha256(v) === CONFIG.passwordHash) {
     notify('pw', '🔓 Passwort richtig', `Entsperrt nach ${state.pwFails} Fehlversuch(en).`);
     $('#pw').blur();
     go('s-swipe'); renderDeck();
@@ -683,6 +719,7 @@ function checkPw() {
   state.pwFails++;
   const hints = ['Leider falsch. Versuch es nochmal.',
                  'Tipp: Ein Freizeitpark 🎢',
+                 'Tipp: Ein heimlich unheimliches Treffen im...? 👻',
                  'Tipp: Liegt in Baden-Württemberg, hat Achterbahnen und „Schwaben" im Namen 😉'];
   $('#pwErr').textContent = hints[Math.min(state.pwFails - 1, hints.length - 1)];
   shake($('#pw'));
