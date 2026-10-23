@@ -290,6 +290,21 @@
   #loader .msg { color: var(--muted); font-size: 15px; min-height: 22px; }
   .spin { width: 70px; height: 70px; animation: pulse 1s infinite; }
 
+  /* ---------- Herbst Special ---------- */
+  .opt.autumn { border-color: #F0A35E; background: #FFF7EE; }
+  .hq-q { font-size: 24px; font-weight: 800; text-align: center; line-height: 1.3; margin: 30px 0 34px; animation: fadeIn .35s; }
+  .hq-ico { font-size: 70px; text-align: center; }
+  .offer-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .offer-head .av { width: 54px; height: 54px; border-radius: 50%; background: #8FA3B8; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; }
+  .offer-head .who { font-size: 13px; color: var(--muted); }
+  .offer-head .who b { display: block; color: var(--text); font-size: 16px; }
+  .offer .line { animation: fadeIn .4s both; }
+  .offer .total { animation: fadeIn .4s both; animation-delay: 2.6s; }
+  .offer-concl { font-size: 14px; line-height: 1.5; background: #FFF7EE; border: 1px dashed #F0A35E; border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; animation: fadeIn .4s both; animation-delay: 3s; }
+  .offer-cd { text-align: center; font-weight: 800; color: var(--red); font-size: 15px; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+  .offer-cd.low { animation: pulse .6s infinite; }
+  .opt.off { opacity: .6; border-style: dashed; }
+  .opt.off .note { display: block; }
   .btn-wa { background: #25D366; color: #fff; }
   .btn-light { background: var(--bg); color: var(--text); }
 </style>
@@ -356,6 +371,58 @@
       <button class="opt" data-meal="Frühstück"><span class="ico">🥐</span><span>Frühstück<span class="note">Nicht beim ersten Date möglich.</span></span></button>
       <button class="opt" data-meal="Mittagessen"><span class="ico">🥗</span><span>Mittagessen<span class="note">Nicht beim ersten Date möglich.</span></span></button>
       <button class="opt" data-meal="Abendessen"><span class="ico">🍷</span><span>Abendessen</span></button>
+      <button class="opt autumn" id="btnAutumn"><span class="ico">🍂</span><span>Herbst Special<small>Nur für kurze Zeit. Wirklich kurz.</small></span></button>
+    </section>
+
+    <!-- 3a · Herbst Special: Eignungsprüfung -->
+    <section class="screen" id="s-hq">
+      <h2>Eignungsprüfung 🍂</h2>
+      <p class="sub" id="hqCount"></p>
+      <div class="hq-ico" id="hqIco"></div>
+      <div class="hq-q" id="hqText"></div>
+      <button class="btn btn-primary" id="hqYes">Ja</button>
+      <button class="btn btn-outline" id="hqNo">Nein</button>
+    </section>
+
+    <!-- 3b · Herbst Special: Angebot von Dr. Paragraph -->
+    <section class="screen" id="s-hoffer">
+      <div class="offer-head">
+        <div class="av">🧑‍⚖️</div>
+        <div class="who"><b>Dr. Paragraph präsentiert</b>Fachanwalt für Tinder-Schadensersatz &amp; Saisonware</div>
+      </div>
+      <h2>Das Herbst Special: ½ Date zum Vorteilspreis</h2>
+      <div class="bill offer" id="offer"></div>
+      <div class="offer-concl"><b>Rechtlich zwingende Schlussfolgerung</b> (§ 69 Abs. 4 i. V. m. § 31 HerbstVO):<br>
+        Wer ein ½ Date bucht, erhält 2,5 Dates Gefühlswert. Wer nicht bucht, verschenkt 2 Dates. Das wäre grob fahrlässig.<br>
+        <b>Ergebnis: Du musst jetzt buchen.</b></div>
+      <div class="spacer"></div>
+      <div class="offer-cd" id="offerCd"></div>
+      <button class="btn btn-primary" id="btnOffer">Jetzt buchen 🍂</button>
+    </section>
+
+    <!-- 3c · Herbst Special: Tag -->
+    <section class="screen" id="s-hday">
+      <h2>Welcher Tag?</h2>
+      <p class="sub">Das Herbst Special gilt nur vom 26.10. bis 01.11.</p>
+      <div id="hdays"></div>
+    </section>
+
+    <!-- 3d · Herbst Special: Format -->
+    <section class="screen" id="s-hmode">
+      <h2>Wie hättest du's gern?</h2>
+      <p class="sub">Alles im Preis inbegriffen (Preis: 0 €).</p>
+      <button class="opt" data-hmode="bring"><span class="ico">🥡</span><span>Bring was zu essen mit und komm vorbei<small>Lieferservice mit Gesprächsfunktion</small></span></button>
+      <button class="opt" data-hmode="meet"><span class="ico">🍽️</span><span>Lass uns irgendwo zum Essen treffen<small>Mit Dach. Wegen Regen. Siehe Frage 2.</small></span></button>
+      <button class="opt" data-hmode="bank"><span class="ico">🍺</span><span>Bier oder Wein auf der Parkbank<small>Decke wird gestellt. Laub auch.</small></span></button>
+    </section>
+
+    <!-- 3e · Herbst Special: Mahlzeit (alles erlaubt) -->
+    <section class="screen" id="s-meal2">
+      <h2>Wann soll's stattfinden?</h2>
+      <p class="sub">Im Herbst Special ist alles möglich. Sogar Frühstück. 🍂</p>
+      <button class="opt" data-meal2="Frühstück"><span class="ico">🥐</span><span>Frühstück<small>Ausnahmsweise erlaubt ✅</small></span></button>
+      <button class="opt" data-meal2="Mittagessen"><span class="ico">🥗</span><span>Mittagessen<small>Ausnahmsweise erlaubt ✅</small></span></button>
+      <button class="opt" data-meal2="Abendessen"><span class="ico">🍷</span><span>Abendessen<small>Es ist ja eh schon dunkel ✅</small></span></button>
     </section>
 
     <!-- 4 · Restaurant -->
@@ -436,14 +503,28 @@
       <button class="btn btn-primary" id="btnTalk" disabled>Weiter</button>
     </section>
 
+    <!-- 8a · Herbst Special: keine Sonderwünsche -->
+    <section class="screen" id="s-hextras">
+      <h2>Sonderwünsche</h2>
+      <p class="sub">Im Herbst Special leider nicht enthalten. Es ist ja nur ein ½ Date. 🍂</p>
+      <div class="opt off"><span class="ico">🚗</span><span>Abholservice<span class="note">Entfällt. Es ist dunkel und regnet – da fährt nicht mal Gerhard.</span></span></div>
+      <div class="opt off"><span class="ico">💐</span><span>Blumen<span class="note">Ersatzweise Laub. Dafür in allen Farben.</span></span></div>
+      <div class="opt off"><span class="ico">🎻</span><span>Geigenspieler<span class="note">Saison beendet. Er ist im Süden.</span></span></div>
+      <div class="opt off"><span class="ico">📋</span><span>Briefing &amp; Dresscode<span class="note">Entfällt. ½ Date = ½ Vorbereitung. Jogginghose bleibt trotzdem verboten.</span></span></div>
+      <textarea class="input" disabled placeholder="🔒 Sonderwünsche sind im Herbst Special gesperrt."></textarea>
+      <div class="spacer"></div>
+      <button class="btn btn-outline" id="btnUpgrade">Upgrade auf Premium-Wünsche (49,99 €)</button>
+      <button class="btn btn-primary" id="btnHextras">Ich bin wunschlos glücklich 🍂</button>
+    </section>
+
     <!-- 9 · Rechnung -->
     <section class="screen" id="s-bill">
       <h2>Ein kurzer Hinweis von Tinder Legal ⚖️</h2>
-      <p class="sub">So sähe die Forderung aus, falls das Date <u>nicht</u> stattfindet:</p>
+      <p class="sub" id="billSub">So sähe die Forderung aus, falls das Date <u>nicht</u> stattfindet:</p>
       <div class="bill" id="bill">
         <div class="head"><b>Forderungsaufstellung</b><span id="billNo"></span></div>
         <div id="billLines"></div>
-        <div class="line minus"><span>Abzgl. fristgerechtes Date</span><span id="billMinus"></span></div>
+        <div class="line minus"><span id="billMinusLbl">Abzgl. fristgerechtes Date</span><span id="billMinus"></span></div>
         <div class="total"><span>Gesamt</span><span id="billTotal"></span></div>
       </div>
       <p class="hint" id="billHint"></p>
@@ -581,6 +662,51 @@ const CONFIG = {
     ['Anwaltskosten Dr. Paragraph (4 Std.)', 1800]
   ],
 
+  // Herbst Special
+  autumn: {
+    questions: [   // [Emoji, Frage, Antwort auf „Nein"]
+      ['🌒', 'Wird es früh dunkel?', 'Sonnenuntergang 16:55 Uhr. Einspruch abgelehnt. 🌒'],
+      ['🌧️', 'Regnet es öfter?', 'Deine Wetter-App sieht das anders. ☔'],
+      ['🧸', 'Sind deine Kinder nicht da?', 'Dann nimm einfach einen Tag, an dem sie nicht da sind. Antwort also: Ja. 😇'],
+      ['🍝', 'Musst du trotzdem etwas essen?', 'Photosynthese klappt im Herbst nachweislich schlecht. 🍂']
+    ],
+    offer: [       // Rechnung von Dr. Paragraph
+      ['Reguläres Date (Restaurant, Briefing, Sonderwünsche)', '1,00 Date'],
+      ['Herbst Special', '× 0,50'],
+      ['Dunkelheits-Gemütlichkeitsfaktor (ab 16:55 Uhr)', '× 1,60'],
+      ['Regen-Kuschelkoeffizient', '× 1,25'],
+      ['Kinderfrei-Bonus', '× 2,00'],
+      ['Hunger-Synergie (man isst ja eh)', '+ 0,50'],
+      ['Gefühlter Date-Wert', '= 2,50 Dates'],
+      ['Aufwand für dich', '0,5 Dates'],
+      ['Effizienz', '500 %'],
+      ['Preis', '0,00 € (statt 0,00 €)']
+    ],
+    offerSeconds: 60,
+    days: [        // [Datum, Untertitel] – Samstag ist gesperrt
+      [new Date(2026, 9, 26), 'Wochenstart mit Highlight'],
+      [new Date(2026, 9, 27), 'Dienstag – unterschätzt'],
+      [new Date(2026, 9, 28), 'Bergfest'],
+      [new Date(2026, 9, 29), 'Fast-Wochenende'],
+      [new Date(2026, 9, 30), 'Wochenende vorglühen'],
+      [new Date(2026, 9, 31), '', 'Halloween 🎃 – Gerhard (84) hat dich schon für den Gruselabend im Schwabenpark gebucht. Er hat eine Jahreskarte.'],
+      [new Date(2026, 10, 1), 'Gemütlicher Sonntag']
+    ],
+    modes: {
+      bring: { ico: '🥡', label: 'Er bringt was zu essen mit und kommt vorbei' },
+      meet:  { ico: '🍽️', label: 'Wir treffen uns irgendwo zum Essen' },
+      bank:  { ico: '🍺', label: 'Bier oder Wein auf der Parkbank' }
+    },
+    billItems: [   // Forderungsaufstellung, falls das Herbst Special nicht stattfindet
+      ['Verfallene Herbst-Dunkelheit (ab 16:55 Uhr)', 1655],
+      ['Ungenutzte Regentage (12 à 69 €)', 828],
+      ['Kinderfreies Zeitfenster verstreichen lassen', 2026],
+      ['Kalorien-Ausgleichsabgabe (du musst ja eh essen)', 311],
+      ['Vorhaltekosten Kürbis-Deko 🎃', 31.10],
+      ['Dr. Paragraph, Herbstpauschale (½ Std.)', 225]
+    ]
+  },
+
   // Benachrichtigung über ntfy.sh – App „ntfy" installieren und dieses Topic abonnieren.
   // Leer lassen ('') = keine Benachrichtigungen.
   ntfyTopic: 'marco-linda-date-7f3k9q2x',
@@ -596,7 +722,8 @@ const state = {
   pwFails: 0, nopeMe: 0, decoyLikes: 0, mealDenied: 0, selfTries: 0,
   meal: '', resto: '', dislikes: new Set(), allergy: '', date: null, time: '', unsure: false, arrive: '', wish: '',
   dress: '', joggingTries: 0, topicsGood: new Set(), topicsBad: new Set(), excel: '', extTries: 0, agbRead: false,
-  message: '', signed: false
+  message: '', signed: false,
+  autumn: false, hq: 0, hNo: 0, hExpired: 0, hSat: 0, hUpgrade: 0, hMode: ''
 };
 
 /* ---------- Notifications ---------- */
@@ -636,19 +763,30 @@ function shake(el) { el.classList.remove('shake'); void el.offsetWidth; el.class
 
 /* ---------- Navigation ---------- */
 const ORDER = ['s-start', 's-swipe', 's-meal', 's-resto', 's-cuisine', 's-date', 's-extras', 's-talk', 's-bill', 's-summary', 's-done'];
+function path() {   // aktueller Pfad – für den Fortschrittsbalken
+  if (!state.autumn) return ORDER;
+  const mid = { bring: ['s-meal2', 's-cuisine'], bank: [] }[state.hMode] || ['s-meal2', 's-resto', 's-cuisine'];
+  return ['s-start', 's-swipe', 's-meal', 's-hq', 's-hoffer', 's-hday', 's-hmode', ...mid, 's-hextras', 's-bill', 's-summary', 's-done'];
+}
 let current = 's-start';
-function go(id) {
+const hist = [];
+function go(id, back) {
+  if (!back && id !== current) hist.push(current);
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   current = id;
-  const i = ORDER.indexOf(id);
-  $('#progress > div').style.width = (i / (ORDER.length - 1) * 100) + '%';
-  $('#backBtn').style.display = (i >= 3 && id !== 's-done') ? 'block' : 'none';
+  const p = path(), i = Math.max(0, p.indexOf(id));
+  $('#progress > div').style.width = (i / (p.length - 1) * 100) + '%';
+  $('#backBtn').style.display = ['s-start', 's-swipe', 's-meal', 's-done'].includes(id) ? 'none' : 'block';
   window.scrollTo(0, 0);
+  if (id === 's-hq') { state.hq = 0; renderHq(); }
+  if (id === 's-hoffer') startOffer(); else clearInterval(offerT);
   if (id === 's-resto') resetResto();
+  if (id === 's-cuisine') $('#s-cuisine .sub').textContent = state.autumn && state.hMode === 'bring'
+    ? 'Er bringt mit – was soll auf keinen Fall in der Tüte sein?' : 'Tippe alles an, was auf keinen Fall auf den Tisch soll.';
   if (id === 's-bill') renderBill();
   if (id === 's-summary') { renderSummary('#summary'); setTimeout(sizeSig, 30); }
 }
-$('#backBtn').onclick = () => go(ORDER[ORDER.indexOf(current) - 1]);
+$('#backBtn').onclick = () => { if (hist.length) go(hist.pop(), true); };
 
 /* ---------- 1 · Countdown + Passwort ---------- */
 function tick() {
@@ -895,12 +1033,118 @@ $$('[data-meal]').forEach(b => b.onclick = () => {
     b.classList.add('denied'); shake(b);
     return;
   }
-  state.meal = meal;
+  state.meal = meal; state.autumn = false;
   $$('[data-meal]').forEach(x => x.classList.remove('sel', 'denied'));
+  $('#btnAutumn').classList.remove('sel');
   b.classList.add('sel');
   notify('meal', '🍷 Mahlzeit', 'Abendessen gewählt' + (state.mealDenied ? ` (vorher ${state.mealDenied}x Frühstück/Mittag probiert).` : '.'));
   setTimeout(() => go('s-resto'), 350);
 });
+
+/* ---------- 3a · Herbst Special ---------- */
+const AUT = CONFIG.autumn;
+$('#btnAutumn').onclick = () => {
+  state.autumn = true;
+  $$('[data-meal]').forEach(x => x.classList.remove('sel', 'denied'));
+  $('#btnAutumn').classList.add('sel');
+  notify('autumn', '🍂 Herbst Special', 'Linda hat das Herbst Special angeklickt!' + (state.mealDenied ? ` (vorher ${state.mealDenied}x Frühstück/Mittag probiert)` : ''));
+  setTimeout(() => go('s-hq'), 350);
+};
+
+function renderHq() {
+  const [ico, q] = AUT.questions[state.hq];
+  $('#hqCount').textContent = `Frage ${state.hq + 1} von ${AUT.questions.length} · Nur wer alle besteht, darf buchen.`;
+  $('#hqIco').textContent = ico;
+  const t = $('#hqText'); t.textContent = q; t.style.animation = 'none'; void t.offsetWidth; t.style.animation = '';
+}
+$('#hqYes').onclick = () => {
+  if (++state.hq < AUT.questions.length) { renderHq(); return; }
+  notify('hq', '✅ Herbst-Eignungsprüfung bestanden', `Alle ${AUT.questions.length} Fragen mit Ja beantwortet` +
+    (state.hNo ? ` (vorher ${state.hNo}x Nein probiert).` : '.'));
+  go('s-hoffer');
+};
+$('#hqNo').onclick = () => {
+  state.hNo++;
+  toast(AUT.questions[state.hq][2], 3200);
+  shake($('#hqNo'));
+};
+
+/* ---------- 3b · Angebot mit Countdown ---------- */
+$('#offer').innerHTML = '<div class="head"><b>Vorteilsberechnung</b><span>Az. HS-2026/½</span></div>' +
+  AUT.offer.map(([l, v], i) => `<div class="line" style="animation-delay:${(i * .25).toFixed(2)}s"><span>${l}</span><span>${v}</span></div>`).join('') +
+  '<div class="total"><span>Ergebnis</span><span>Jackpot 🍂</span></div>';
+let offerT, offerLeft;
+function renderOfferCd() {
+  const cd = $('#offerCd');
+  cd.textContent = `⏳ Angebot gültig noch ${Math.floor(offerLeft / 60)}:${String(offerLeft % 60).padStart(2, '0')}`;
+  cd.classList.toggle('low', offerLeft <= 10);
+}
+function startOffer() {
+  clearInterval(offerT);
+  offerLeft = AUT.offerSeconds; renderOfferCd();
+  offerT = setInterval(() => {
+    if (--offerLeft <= 0) {
+      state.hExpired++;
+      offerLeft = AUT.offerSeconds;
+      toast(`Abgelaufen! Dr. Paragraph hat aus Kulanz um ${AUT.offerSeconds} Sek. verlängert. Ausnahmsweise. Zum ${state.hExpired + 1}. Mal.`, 3600);
+    }
+    renderOfferCd();
+  }, 1000);
+}
+$('#btnOffer').onclick = () => {
+  notify('offer', '🧑‍⚖️ Herbst Special gebucht', `Bei ${offerLeft} Sek. Restzeit gebucht` +
+    (state.hExpired ? ` (Countdown ${state.hExpired}x abgelaufen).` : '.'));
+  confetti(25);
+  go('s-hday');
+};
+
+/* ---------- 3c · Tag ---------- */
+const WD = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+AUT.days.forEach(([dt, sub, blocked]) => {
+  const b = document.createElement('button');
+  b.className = 'opt';
+  const lbl = `${WD[dt.getDay()]}, ${dt.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}.`;
+  b.innerHTML = `<span class="ico">${blocked ? '🎃' : '🍂'}</span><span>${lbl}` +
+    (blocked ? `<span class="note">${blocked}</span>` : `<small>${sub}</small>`) + '</span>';
+  if (blocked) b.classList.add('off');
+  b.onclick = () => {
+    if (blocked) { state.hSat++; shake(b); toast('Samstag ist leider vergeben. Gerhard war schneller. 👴🎃', 3000); return; }
+    if (dt < minDate) { shake(b); toast('Dieser Tag ist schon vorbei. Der Herbst wartet nicht. 🍂'); return; }
+    state.date = dt; state.time = ''; state.unsure = false;
+    $$('#hdays .opt').forEach(x => x.classList.toggle('sel', x === b));
+    notify('hday', '📅 Herbst-Termin', fmtDate() + (state.hSat ? `\n(${state.hSat}x Halloween-Samstag versucht)` : ''));
+    setTimeout(() => go('s-hmode'), 350);
+  };
+  $('#hdays').appendChild(b);
+});
+
+/* ---------- 3d · Format ---------- */
+$$('[data-hmode]').forEach(b => b.onclick = () => {
+  state.hMode = b.dataset.hmode;
+  $$('[data-hmode]').forEach(x => x.classList.toggle('sel', x === b));
+  notify('hmode', AUT.modes[state.hMode].ico + ' Herbst-Format', AUT.modes[state.hMode].label);
+  setTimeout(() => go(state.hMode === 'bank' ? 's-hextras' : 's-meal2'), 350);
+});
+
+/* ---------- 3e · Mahlzeit im Herbst Special (alles erlaubt) ---------- */
+$$('[data-meal2]').forEach(b => b.onclick = () => {
+  state.meal = b.dataset.meal2;
+  $$('[data-meal2]').forEach(x => x.classList.toggle('sel', x === b));
+  notify('meal2', '🍂 Mahlzeit (Herbst)', state.meal + ' gewählt.');
+  setTimeout(() => go(state.hMode === 'bring' ? 's-cuisine' : 's-resto'), 350);
+});
+
+/* ---------- 8a · Keine Sonderwünsche ---------- */
+$('#btnUpgrade').onclick = () => {
+  state.hUpgrade++;
+  shake($('#btnUpgrade'));
+  toast('Upgrade nicht möglich: Das Herbst Special ist bereits das beste Angebot. – Dr. Paragraph 🧑‍⚖️', 3200);
+};
+$('#btnHextras').onclick = () => {
+  notify('hextras', '🎁 Sonderwünsche (Herbst)', 'Wunschlos glücklich bestätigt' +
+    (state.hUpgrade ? ` (vorher ${state.hUpgrade}x Premium-Upgrade versucht).` : '.'));
+  go('s-bill');
+};
 
 /* ---------- 4 · Restaurant (der flüchtende Button) ---------- */
 const SELF_MAX = 5;
@@ -964,7 +1208,7 @@ $('#btnCuisine').onclick = () => {
   state.allergy = $('#allergy').value.trim();
   notify('cuisine', '🍽️ Küchen', 'Mag nicht: ' + (state.dislikes.size ? [...state.dislikes].join(', ') : 'nichts – isst alles') +
     (state.allergy ? `\nAllergien: ${state.allergy}` : ''));
-  go('s-date');
+  go(state.autumn ? 's-hextras' : 's-date');
 };
 
 /* ---------- 6 · Kalender ---------- */
@@ -1011,6 +1255,7 @@ $('#unsure').onchange = e => {
 };
 function validateDate() { $('#btnDate').disabled = !(state.unsure || (state.date && state.time)); }
 function fmtDate() {
+  if (state.autumn && state.date) return state.date.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', Uhrzeit machen wir spontan aus';
   if (state.unsure || !state.date) return 'Noch offen – sie meldet sich, sobald es ruhiger wird (spätestens 31.05.2027)';
   return state.date.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + `, ${state.time} Uhr`;
 }
@@ -1071,10 +1316,18 @@ const eur = n => n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' 
 let billPaid = false;
 function renderBill() {
   billPaid = false;
-  const sum = CONFIG.billItems.reduce((a, [, v]) => a + v, 0);
+  let items = CONFIG.billItems;
+  if (state.autumn) {   // Herbst: ½ Date = ½ Schaden
+    const sub = AUT.billItems.reduce((a, [, v]) => a + v, 0);
+    items = [...AUT.billItems, ['Zwischensumme', sub], ['Herbst-Rabatt (½ Date = ½ Schaden)', -sub / 2],
+             ['Saisonzuschlag (½ Schaden = ganzer Ärger)', sub / 2]];
+  }
+  const sum = items.reduce((a, [l, v]) => l === 'Zwischensumme' ? a : a + v, 0);
   $('#bill').classList.remove('paid');
   $('#billNo').textContent = 'Az. TL-' + (69000 + Math.floor(Math.random() * 999));
-  $('#billLines').innerHTML = CONFIG.billItems.map(([l, v]) => `<div class="line"><span>${l}</span><span>${eur(v)}</span></div>`).join('');
+  $('#billSub').innerHTML = `So sähe die Forderung aus, falls das ${state.autumn ? 'Herbst Special' : 'Date'} <u>nicht</u> stattfindet:`;
+  $('#billMinusLbl').textContent = state.autumn ? 'Abzgl. gebuchtes ½ Date' : 'Abzgl. fristgerechtes Date';
+  $('#billLines').innerHTML = items.map(([l, v]) => `<div class="line"><span>${l}</span><span>${eur(v)}</span></div>`).join('');
   $('#billMinus').textContent = '− ' + eur(sum);
   $('#billTotal').textContent = eur(sum);
   $('#billHint').textContent = '';
@@ -1085,7 +1338,8 @@ $('#btnBill').onclick = () => {
   billPaid = true;
   $('#bill').classList.add('paid');
   $('#billTotal').textContent = eur(0);
-  $('#billHint').textContent = 'Puh. Bei fristgerechtem Date entfällt die Forderung vollständig. 😮‍💨';
+  $('#billHint').textContent = state.autumn ? 'Puh. Mit dem gebuchten ½ Date entfällt die Forderung vollständig. Auch die halbe. 🍂'
+    : 'Puh. Bei fristgerechtem Date entfällt die Forderung vollständig. 😮‍💨';
   $('#btnBill').textContent = 'Weiter zum Vertrag';
 };
 
@@ -1129,11 +1383,27 @@ window.addEventListener('resize', () => { if (current === 's-summary') sizeSig()
 /* ---------- 11 · Zusammenfassung ---------- */
 const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function summaryRows() {
+  const dislikes = state.dislikes.size ? [...state.dislikes].join(', ') : 'Nichts – isst alles 😋';
+  if (state.autumn) {
+    const m = AUT.modes[state.hMode] || { ico: '🍂', label: '–' }, food = state.hMode !== 'bank';
+    return [
+      ['💘', 'Date mit', ME.name],
+      ['🍂', 'Paket', 'Herbst Special – ½ Date zum Vorteilspreis'],
+      ['📅', 'Termin', fmtDate()],
+      [m.ico, 'Format', m.label],
+      ...(food ? [['🍽️', 'Mahlzeit', state.meal]] : []),
+      ...(state.hMode === 'meet' ? [['✨', 'Restaurant', 'Überraschung – wird von ' + ME.name + ' ausgesucht']] : []),
+      ...(food ? [['🚫', 'Bitte nicht', dislikes]] : []),
+      ...(food && state.allergy ? [['⚠️', 'Allergien', state.allergy]] : []),
+      ['🎁', 'Sonderwünsche', 'Im Herbst Special nicht enthalten'],
+      ['📋', 'Briefing', 'Entfällt (½ Date = ½ Vorbereitung)']
+    ];
+  }
   return [
     ['💘', 'Date mit', ME.name],
     ['🍷', 'Mahlzeit', state.meal],
     ['✨', 'Restaurant', 'Überraschung – wird von ' + ME.name + ' ausgesucht'],
-    ['🚫', 'Bitte nicht', state.dislikes.size ? [...state.dislikes].join(', ') : 'Nichts – isst alles 😋'],
+    ['🚫', 'Bitte nicht', dislikes],
     ...(state.allergy ? [['⚠️', 'Allergien', state.allergy]] : []),
     ['📅', 'Termin', fmtDate()],
     ['🚗', 'Anreise', state.arrive],
@@ -1171,7 +1441,8 @@ $('#btnSend').onclick = () => {
     (state.message ? `\n\n💌 Nachricht an dich: ${state.message}` : '') +
     `\n\nStatistik: ${state.pwFails} PW-Fehlversuche, ${state.nopeMe}x Nope bei dir, ${state.decoyLikes} Fremd-Likes, ` +
     `${state.mealDenied}x Frühstück/Mittag, ${state.selfTries}x „selbst wählen", ${state.joggingTries}x Jogginghose, ` +
-    `${state.extTries}x Fristverlängerung, AGB ${state.agbRead ? 'gelesen' : 'ignoriert'}`;
+    `${state.extTries}x Fristverlängerung, AGB ${state.agbRead ? 'gelesen' : 'ignoriert'}` +
+    (state.autumn ? `\nHerbst: ${state.hNo}x Nein, Countdown ${state.hExpired}x abgelaufen, ${state.hSat}x Halloween-Samstag, ${state.hUpgrade}x Premium-Upgrade` : '');
   notify('final', '🎉 Date zugesagt!', text, true);
   if (state.message) notify('msg', '💌 Nachricht von Linda', state.message);
 
@@ -1180,7 +1451,7 @@ $('#btnSend').onclick = () => {
     $('#sigHer').innerHTML = `<img src="${sigUrl}" alt="Unterschrift">`;
     $('#sigMe').textContent = ME.name;
     $('#sigMeName').textContent = ME.name;
-    $('#btnIcs').textContent = state.date && !state.unsure ? '📅 Termin in meinen Kalender eintragen' : '📅 Frist in meinen Kalender eintragen';
+    $('#btnIcs').textContent = state.date && (state.autumn || !state.unsure) ? '📅 Termin in meinen Kalender eintragen' : '📅 Frist in meinen Kalender eintragen';
     const stats = [
       `🔑 Passwort-Fehlversuche: <b>${state.pwFails}</b>`,
       `👈 Versuche, ${ME.name} wegzuwischen: <b>${state.nopeMe}</b>`,
@@ -1189,7 +1460,13 @@ $('#btnSend').onclick = () => {
       `🏃 Jagd auf den „Selbst wählen"-Button: <b>${state.selfTries}x</b>`,
       `🩳 Jogginghose versucht: <b>${state.joggingTries}x</b>`,
       `⏳ Fristverlängerungen beantragt: <b>${state.extTries}</b> (davon genehmigt: 0)`,
-      `📜 AGB gelesen: <b>${state.agbRead ? 'angeblich ja' : 'nein'}</b>`
+      `📜 AGB gelesen: <b>${state.agbRead ? 'angeblich ja' : 'nein'}</b>`,
+      ...(state.autumn ? [
+        `🍂 Herbst-Fragen mit „Nein" beantwortet: <b>${state.hNo}x</b> (gezählt: 0)`,
+        `⏳ Angebots-Countdown verpasst: <b>${state.hExpired}x</b>`,
+        `🎃 Halloween-Samstag versucht: <b>${state.hSat}x</b>`,
+        `💎 Premium-Upgrade versucht: <b>${state.hUpgrade}x</b>`
+      ] : [])
     ];
     $('#stats').innerHTML = '<b>Offizielle Statistik</b><br>' + stats.join('<br>');
     go('s-done');
@@ -1202,7 +1479,11 @@ $('#btnIcs').onclick = () => {
   const pad = n => String(n).padStart(2, '0');
   const stamp = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
   let lines;
-  if (state.date && !state.unsure) {
+  if (state.autumn && state.date) {   // Uhrzeit offen → ganztägig
+    const e = new Date(state.date); e.setDate(e.getDate() + 1);
+    lines = [`DTSTART;VALUE=DATE:${stamp(state.date)}`, `DTEND;VALUE=DATE:${stamp(e)}`, `SUMMARY:½ Date mit ${ME.name} 🍂 (Herbst Special)`,
+             `DESCRIPTION:${AUT.modes[state.hMode].label}. Uhrzeit machen wir spontan aus. Schadensersatz abgewendet.`];
+  } else if (state.date && !state.unsure) {
     const [h, m] = state.time.split(':').map(Number);
     const s = new Date(state.date); s.setHours(h, m);
     const e = new Date(s); e.setHours(e.getHours() + 3);
@@ -1228,7 +1509,7 @@ $('#btnIcs').onclick = () => {
 
 /* ---------- WhatsApp ---------- */
 $('#btnWa').onclick = () => {
-  const txt = `Hiermit bestätige ich unser Date! 😊🍷\n\n${summaryText()}` + (state.message ? `\n\n${state.message}` : '') +
+  const txt = `Hiermit bestätige ich unser ${state.autumn ? 'Herbst-Special-Date! 😊🍂' : 'Date! 😊🍷'}\n\n${summaryText()}` + (state.message ? `\n\n${state.message}` : '') +
     '\n\nSchadensersatz abgewendet. ✅';
   const base = CONFIG.whatsapp ? `https://wa.me/${CONFIG.whatsapp}` : 'https://wa.me/';
   window.open(`${base}?text=${encodeURIComponent(txt)}`, '_blank');
